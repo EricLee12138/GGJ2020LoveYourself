@@ -26,7 +26,9 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 	//UnityEvent resultEvent;
 
 	[SerializeField]
-	float stationaryTimeLimit = 0.5f;	Vector3 objectPosition;
+	float stationaryTimeLimit = 0.5f;
+
+	Vector3 objectPosition;
 	Vector3 objectPositionVector;
 
 	Vector3 upVector = Vector3.up;
@@ -56,7 +58,11 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 			return;
 		}
 
-		if (touch.phase == TouchPhase.Stationary) {			stationaryTime += Time.deltaTime;		} else {			stationaryTime = 0;		}
+		if (touch.phase == TouchPhase.Stationary) {
+			stationaryTime += Time.deltaTime;
+		} else {
+			stationaryTime = 0;
+		}
 
 		if (stationaryTime >= stationaryTimeLimit) {
 			stationaryTime = 0;
@@ -85,8 +91,11 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 			}
 
 			break;
-		case TouchPhase.Moved:
-		case TouchPhase.Stationary:			if (dragged) {
+
+		case TouchPhase.Moved:
+		case TouchPhase.Stationary:
+
+			if (dragged) {
 				DragObject ();
 				TriggerDragEvent ();
 
@@ -101,7 +110,9 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 				touchDirection = touchWorldPosition - mainCamera.transform.position;
 				float x = objectPositionVector.y / touchDirection.y;
 				Vector3 movementVector = x * touchDirection - objectPositionVector;
-				transform.position = objectPosition + movementVector;				// Check if the target object intersects with the ray
+				transform.position = objectPosition + movementVector;
+
+				// Check if the target object intersects with the ray
 				if (Physics.Raycast (touchWorldPosition, touchDirection, out hit)) {
 					for (int i = 0; i < targets.Count; i++)
 					{
@@ -112,13 +123,18 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 							DropObject();
 							TriggerDropEvent(resultEvents[i]);
 						}
-					}				}			}
+					}
+				}
+			}
 
 			break;
 
 		case TouchPhase.Ended:
-			if (dragged) {				dragged = false;
-				DropObject ();			}
+			if (dragged) {
+				dragged = false;
+
+				DropObject ();
+			}
 
 			break;
 		}

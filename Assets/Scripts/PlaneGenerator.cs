@@ -35,6 +35,8 @@ public class PlaneGenerator : MonoBehaviour {
     public void Update () {
         _UpdateApplicationLifecycle ();
 
+		if (GameFlowManager.gameStarted) return;
+
         // Raycast against the location the screen mid-point to search for planes.
         TrackableHit hit;
         TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
@@ -44,46 +46,44 @@ public class PlaneGenerator : MonoBehaviour {
             if (hit.Trackable is DetectedPlane &&
                 (hit.Trackable as DetectedPlane).PlaneType == DetectedPlaneType.HorizontalUpwardFacing) {
                 if (planeDetected == null) {
-                    planeDetected = Instantiate (planeDetectedPrefab, hit.Pose.position, hit.Pose.rotation);
-                    planeDetected.transform.Rotate (0, _PrefabRotation, 0, Space.Self);
-                    planeDetected.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
+                    planeDetected = Instantiate (planeDetectedPrefab);					planeDetected.transform.position = hit.Pose.position;					//planeDetected.transform.Rotate (0, _PrefabRotation, 0, Space.Self);					planeDetected.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
                 } else {
                     planeDetected.transform.position = hit.Pose.position;
-                    planeDetected.transform.rotation = hit.Pose.rotation;
-                    planeDetected.transform.Rotate (0, _PrefabRotation, 0, Space.Self);
+                    //planeDetected.transform.rotation = hit.Pose.rotation;
+                    //planeDetected.transform.Rotate (0, _PrefabRotation, 0, Space.Self);
                 }
             }
         }
 
-        //Touch touch;
-        //// If the player has not touched the screen, we are done with this update.
-        //if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began) {
-        //    return;
-        //}
+        Touch touch;
+        // If the player has not touched the screen, we are done with this update.
+        if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began) {
+            return;
+        }
 
-        //// Should not handle input if the player is pointing on UI.
-        //if (EventSystem.current.IsPointerOverGameObject (touch.fingerId)) {
-        //    return;
-        //}
+        // Should not handle input if the player is pointing on UI.
+        if (EventSystem.current.IsPointerOverGameObject (touch.fingerId)) {
+            return;
+        }
 
-        //if (Frame.Raycast (touch.position.x, touch.position.y, raycastFilter, out hit)) {
-        //    if ((hit.Trackable is DetectedPlane) &&
-        //        Vector3.Dot (firstPersonCamera.transform.position - hit.Pose.position,
-        //            hit.Pose.rotation * Vector3.up) < 0) {
-        //        Debug.Log ("Hit at back of the current DetectedPlane");
-        //    } else {
-        //        if (hit.Trackable is DetectedPlane &&
-        //            (hit.Trackable as DetectedPlane).PlaneType == DetectedPlaneType.HorizontalUpwardFacing) {
-        //            plane = Instantiate (planePrefab, hit.Pose.position, hit.Pose.rotation);
-        //            plane.transform.Rotate (0, _PrefabRotation, 0, Space.Self);
-        //            gameObject.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
+        if (Frame.Raycast (touch.position.x, touch.position.y, raycastFilter, out hit)) {
+            if ((hit.Trackable is DetectedPlane) &&
+                Vector3.Dot (firstPersonCamera.transform.position - hit.Pose.position,
+                    hit.Pose.rotation * Vector3.up) < 0) {
+                Debug.Log ("Hit at back of the current DetectedPlane");
+            } else {
+                if (hit.Trackable is DetectedPlane &&
+                    (hit.Trackable as DetectedPlane).PlaneType == DetectedPlaneType.HorizontalUpwardFacing) {
+					planeDetected.SetActive (false);					plane = Instantiate (planePrefab);					plane.transform.position = hit.Pose.position;					//plane.transform.Rotate (0, _PrefabRotation, 0, Space.Self);					gameObject.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
 
-        //            if (GameFlowManager.gameStarted) {
-        //                GameFlowManager.StartGame();
-        //            }
-        //        }
-        //    }
-        //}
+					StartCoroutine (TriggerPlaneGeneration ());
+
+                    if (!GameFlowManager.gameStarted) {
+                        GameFlowManager.StartGame();
+                    }
+                }
+            }
+        }
     }
 
     private void _UpdateApplicationLifecycle () {
@@ -136,4 +136,8 @@ public class PlaneGenerator : MonoBehaviour {
             }));
         }
     }
+
+	IEnumerator TriggerPlaneGeneration() {		yield return new WaitForSeconds (1f);
+		plane.GetComponent<Animator> ().SetTrigger ("TriggerGeneration");
+	}
 }
