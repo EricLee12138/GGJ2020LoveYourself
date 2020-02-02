@@ -90,6 +90,8 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 				}
 			}
 
+			//can play pick up sound here
+
 			break;
 
 		case TouchPhase.Moved:
