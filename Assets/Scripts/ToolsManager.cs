@@ -7,6 +7,10 @@ public class ToolsManager : MonoBehaviour
 
 	public GameObject Water;
 
+    public GameObject Apple;
+
+    public GameObject Tissue;
+
     // Start is called before the first frame update
     void Start()
     {

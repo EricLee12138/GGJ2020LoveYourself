@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5628493165832673001}
   - component: {fileID: 4596572697596154468}
   m_Layer: 0
-  m_Name: NurbsCircleDetected
+  m_Name: TearsDetected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

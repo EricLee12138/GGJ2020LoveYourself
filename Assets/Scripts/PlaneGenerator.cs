@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GoogleARCore;
 using GoogleARCore.Examples.Common;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 #if UNITY_EDITOR
@@ -19,6 +20,12 @@ public class PlaneGenerator : MonoBehaviour {
 
     [SerializeField]
     GameObject planeDetectedPrefab;
+
+    [SerializeField]
+    GameObject target;
+
+    [SerializeField]
+    UnityEvent resultEvent;
 
     GameObject plane;
     GameObject planeDetected;
@@ -74,9 +81,17 @@ public class PlaneGenerator : MonoBehaviour {
             } else {
                 if (hit.Trackable is DetectedPlane &&
                     (hit.Trackable as DetectedPlane).PlaneType == DetectedPlaneType.HorizontalUpwardFacing) {
-					planeDetected.SetActive (false);					plane = Instantiate (planePrefab);					plane.transform.position = hit.Pose.position;					//plane.transform.Rotate (0, _PrefabRotation, 0, Space.Self);					gameObject.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
+					planeDetected.SetActive (false);					plane = Instantiate (planePrefab);					plane.transform.position = hit.Pose.position;
+                    //plane.transform.Rotate (0, _PrefabRotation, 0, Space.Self);
+                    //gameObject.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
 
-					StartCoroutine (TriggerPlaneGeneration ());
+                    GameFlowManager.tools.Water = plane;
+                    GameFlowManager.plane.transform.parent = plane.transform;
+
+                    plane.GetComponent<DraggableItem>().AddTarget(target);
+                    plane.GetComponent<DraggableItem>().AddResultEvent(resultEvent);
+
+                    StartCoroutine (TriggerPlaneGeneration ());
 
                     if (!GameFlowManager.gameStarted) {
                         GameFlowManager.StartGame();

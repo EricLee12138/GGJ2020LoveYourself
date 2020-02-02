@@ -184,4 +184,13 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 		print (eventData);
 	}
 
+	public void AddTarget(GameObject target)
+	{
+		targets.Add(target);
+	}
+
+	public void AddResultEvent(UnityEvent e)
+	{
+		resultEvents.Add(e);
+	}
 }

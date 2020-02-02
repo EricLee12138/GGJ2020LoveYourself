@@ -11,7 +11,10 @@ public enum CharacterState {	LegBroken = 0,
 
 public class CharacterManager : MonoBehaviour {
 	CharacterState state;
-
+	public GameObject character;
+	public GameObject legBrokenObject;
+	public GameObject headBrokenObject;
+	public GameObject heartBrokenObject;
 	int baldness = 2;	// Start is called before the first frame update	void Start () {	}	// Update is called once per frame	void Update () {
 		switch (state) {
 		case CharacterState.LegBroken:
@@ -22,6 +25,7 @@ public class CharacterManager : MonoBehaviour {
 				break;			case 0:
 				break;			}
 			break;		case CharacterState.Hungry:
+
 			break;		case CharacterState.Lonely:
 			break;		case CharacterState.Healthy:
 			break;		}	}
@@ -30,19 +34,29 @@ public class CharacterManager : MonoBehaviour {
 		print ("Leg Fixed");
 
 		if (state == CharacterState.LegBroken)
+		{
 			state = CharacterState.HeadBroken;
+			legBrokenObject.SetActive(false);
+			headBrokenObject.SetActive(true);
+		}
+	}	public void FixHead () {
+		print("Head Fixed");
+		if (state == CharacterState.HeadBroken)
+		{
+			state = CharacterState.Bald;
 
-		// TODO: Other feedback	}	public void FixHead () {
-		if (state == CharacterState.HeadBroken)			state = CharacterState.HeadBroken;		// TODO: Other feedback	}
+		}		// TODO: Other feedback	}
 
-	public void FixBaldness () {
+	public int FixBaldness () {
 		baldness--;
 
 		if (state == CharacterState.Bald) {
 			if (baldness == 1) {
-				// Mid-baldness feedback			} else if (baldness == 0) {				state = CharacterState.HeadBroken;
+				// Mid-baldness feedback			} else if (baldness == 0) {				state = CharacterState.Hungry;
 			}		}
-		// TODO: Other feedback	}
+
+		return baldness;
+	}
 
 	public void FixHunger () {
 		if (state == CharacterState.Hungry)
