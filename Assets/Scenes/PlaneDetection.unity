@@ -4805,6 +4805,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9176168478732164996, guid: a00e7f050d5ce654d9295a69635bd7b0,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176168478732164996, guid: a00e7f050d5ce654d9295a69635bd7b0,
+        type: 3}
+      propertyPath: m_SelectedEditorRenderState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176168478732164996, guid: a00e7f050d5ce654d9295a69635bd7b0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -302588388414568996, guid: 44ebc03bd713e704a835e123c3fbf0d9,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 2376579511596535170, guid: a00e7f050d5ce654d9295a69635bd7b0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a00e7f050d5ce654d9295a69635bd7b0, type: 3}

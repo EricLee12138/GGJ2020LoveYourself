@@ -82,6 +82,23 @@ public class BillBoardImage : MonoBehaviour
             toRot = new Vector3(initRot.x, initRot.y, -60f);
             StartCoroutine(InitParticles());
         }
+        StartCoroutine(Reset());
+    }
+
+    public void TriggerEnd()
+    {
+        initRot = transform.rotation.eulerAngles;
+        trigger = true;
+        if (objectName == ObjectName.Hammer)
+        {
+            toRot = new Vector3(initRot.x, initRot.y, 40f);
+            StartCoroutine(ChangeRotation());
+        }
+        else if (objectName == ObjectName.Cup)
+        {
+            toRot = new Vector3(initRot.x, initRot.y, -60f);
+            StartCoroutine(InitParticles());
+        }
         StartCoroutine(DestroyInTime());
     }
 
@@ -105,14 +122,21 @@ public class BillBoardImage : MonoBehaviour
         StartCoroutine(DestroyParticles(particleObject));
     }
 
+    IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(animTime);
+        trigger = false;
+        transform.localRotation = Quaternion.Euler(initRot);
+    }
+
     IEnumerator DestroyInTime()
     {
         yield return new WaitForSeconds(animTime);
         grow = true;
-        yield return new WaitForSeconds(endTime/3f);
+        yield return new WaitForSeconds(endTime / 3f);
         shrink = true;
         grow = false;
-        yield return new WaitForSeconds(endTime*2f/3f);
+        yield return new WaitForSeconds(endTime * 2f / 3f);
         StopAllCoroutines();
         GameObject.Destroy(this.gameObject);
     }

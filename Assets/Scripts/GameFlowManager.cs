@@ -30,17 +30,18 @@ public class GameFlowManager : MonoBehaviour {
 
 	public void HitHead () {
 		print("Hit Head");
-		character.FixHead ();		tools.hammer.SetActive(false);		tools.bulb.SetActive(true);		plane.transform.Find("Tears").gameObject.GetComponentInChildren<TappableItem>(true).enabled = true;			}
+		character.FixHead ();		tools.hammer.GetComponent<BillBoardImage>().TriggerEnd();		tools.bulb.SetActive(true);			}
 
 	public void LightUp () {
 		print("Tap light up");
 		if (!litUp)
 		{
 			litUp = true;
+			plane.transform.Find("Tears").gameObject.GetComponentInChildren<TappableItem>(true).enabled = true;
 			if (character.FixBaldness() == 0)
 			{
 				tools.Apple.SetActive(true);
-				tools.bulb.SetActive(false);
+				tools.bulb.GetComponent<BillBoardImage>().TriggerEnd();
 			}
 		}
 	}
@@ -58,7 +59,8 @@ public class GameFlowManager : MonoBehaviour {
 			if (character.FixBaldness() == 0)
 			{
 				tools.Apple.SetActive(true);
-				tools.cup.SetActive(false);
+				tools.cup.GetComponent<BillBoardImage>().TriggerEnd();
+				plane.transform.Find("Tears").gameObject.GetComponentInChildren<TappableItem>(true).enabled = false;
 			}
 		}
 	}

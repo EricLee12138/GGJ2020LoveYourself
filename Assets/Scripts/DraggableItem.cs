@@ -129,6 +129,11 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 
 								DropObject();
 								TriggerDropEvent(resultEvents[i]);
+								BillBoardImage imageObject = gameObject.GetComponent<BillBoardImage>();
+								if (imageObject != null)
+								{
+									imageObject.Trigger();
+								}
 							}
 						}
 					}
