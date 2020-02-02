@@ -28,6 +28,7 @@ using GoogleARCore;#if UNITY_EDITOR
 		Vector3 touchDirection = touchWorldPosition - GameFlowManager.camera.transform.position;		//Debug.DrawRay (touchWorldPosition, touchDirection * 100f, Color.red, 10f);		if (Physics.Raycast (touchWorldPosition, touchDirection, out hit)) {
 			if (hit.transform.gameObject == gameObject) {
 				TriggerResultEvent ();
+				Handheld.Vibrate();
 			}
 		}
 	}

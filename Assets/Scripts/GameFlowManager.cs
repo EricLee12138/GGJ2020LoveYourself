@@ -30,7 +30,7 @@ public class GameFlowManager : MonoBehaviour {
 
 	public void HitHead () {
 		print("Hit Head");
-		character.FixHead ();		tools.hammer.SetActive(false);		tools.bulb.SetActive(true);		tools.Water.SetActive(true);	}
+		character.FixHead ();		tools.hammer.SetActive(false);		tools.bulb.SetActive(true);		plane.transform.Find("Tears").gameObject.GetComponentInChildren<TappableItem>(true).enabled = true;			}
 
 	public void LightUp () {
 		print("Tap light up");
@@ -40,24 +40,32 @@ public class GameFlowManager : MonoBehaviour {
 			if (character.FixBaldness() == 0)
 			{
 				tools.Apple.SetActive(true);
+				tools.bulb.SetActive(false);
 			}
 		}
+	}
+
+	public void Cup()
+	{
+		tools.cup.SetActive(true);
 	}
 
 	public void Water () {
 		if (!watered)
 		{
+			print("jmfdngdijgdkmj");
 			watered = true;
 			if (character.FixBaldness() == 0)
 			{
 				tools.Apple.SetActive(true);
+				tools.cup.SetActive(false);
 			}
 		}
 	}
 
 	public void FeedApple () {
 		print ("Feed apple");
-		character.FixHunger ();		tools.Tissue.SetActive(true);	}
+		character.FixHunger ();		tools.Tissue.SetActive(true);		tools.Apple.SetActive(false);	}
 
 	public void GrabTissue () {
 		character.FixLoneliness ();

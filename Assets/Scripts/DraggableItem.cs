@@ -99,9 +99,10 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 			{
 				DragObject();
 				TriggerDragEvent();
+					Handheld.Vibrate();
 
 				// Make the object follow the touch raycasting line
-				touchWorldPosition = mainCamera.ScreenToWorldPoint(
+					touchWorldPosition = mainCamera.ScreenToWorldPoint(
 					new Vector3(
 						touch.position.x,
 						touch.position.y,

@@ -10,12 +10,20 @@ public enum CharacterState {	LegBroken = 0,
 	Healthy}
 
 public class CharacterManager : MonoBehaviour {
-	CharacterState state;
+	[SerializeField]
+	GameObject hair;
+
 	public GameObject character;
 	public GameObject legBrokenObject;
 	public GameObject headBrokenObject;
+
 	public GameObject heartBrokenObject;
-	int baldness = 2;	// Start is called before the first frame update	void Start () {	}	// Update is called once per frame	void Update () {
+	public GameObject hungryObject;
+	
+
+	CharacterState state;
+
+	int baldness = 2;	bool end = false;	// Start is called before the first frame update	void Start () {		end = false;	}	// Update is called once per frame	void Update () {
 		switch (state) {
 		case CharacterState.LegBroken:
 			break;		case CharacterState.HeadBroken:
@@ -56,7 +64,11 @@ public class CharacterManager : MonoBehaviour {
 
 		if (state == CharacterState.Bald) {
 			if (baldness == 1) {
-				// Mid-baldness feedback			} else if (baldness == 0) {				state = CharacterState.Hungry;
+				// Mid-baldness feedback
+				hair.GetComponent<Animator>().SetTrigger("Seed");			} else if (baldness == 0) {				hair.GetComponent<Animator>().SetTrigger("Growth");				state = CharacterState.Hungry;
+
+				heartBrokenObject.SetActive(false);
+				hungryObject.SetActive(true);
 			}		}
 
 		return baldness;
@@ -64,10 +76,36 @@ public class CharacterManager : MonoBehaviour {
 
 	public void FixHunger () {
 		if (state == CharacterState.Hungry)
-			state = CharacterState.Lonely;		// TODO: Other feedback	}
+			state = CharacterState.Lonely;		heartBrokenObject.SetActive(true);
+		hungryObject.SetActive(false);
+		// TODO: Other feedback
+	}
 
 	public void FixLoneliness () {
 		if (state == CharacterState.Lonely)
-			state = CharacterState.Healthy;		// TODO: Other feedback	}
+			state = CharacterState.Healthy;		if (!end)
+		{
+			StartCoroutine(ShowTitle());			end = true;
+		}		// TODO: Other feedback	}
+
+	IEnumerator ShowTitle()
+	{
+		yield return new WaitForSeconds(7f);
+		GameObject title = GameObject.Find("Title");
+		title.transform.parent = Camera.main.transform;
+
+		StartCoroutine(RepositionTitle(title));
+		
+
+	}
+
+	IEnumerator RepositionTitle(GameObject title)
+	{
+		yield return new WaitForEndOfFrame();
+		title.transform.localPosition = new Vector3(0f, 0f, 2f);
+		title.transform.localScale = Vector3.one;
+		title.transform.localRotation = Quaternion.identity;
+		title.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
+	}
 
 }

@@ -11,6 +11,8 @@ public class ToolsManager : MonoBehaviour
 
     public GameObject Tissue;
 
+    public GameObject cup;
+
     // Start is called before the first frame update
     void Start()
     {
