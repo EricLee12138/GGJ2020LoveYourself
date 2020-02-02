@@ -138,6 +138,6 @@ public class PlaneGenerator : MonoBehaviour {
     }
 
 	IEnumerator TriggerPlaneGeneration() {		yield return new WaitForSeconds (1f);
-		plane.GetComponent<Animator> ().SetBool ("TriggerGeneration", true);
+		plane.GetComponent<Animator> ().SetTrigger ("TriggerGeneration");
 	}
 }

@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PlaneDetection.unity
+    guid: 49400f9bfcfee42389a8b79e82b1375e
   m_configObjects: {}
