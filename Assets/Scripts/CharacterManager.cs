@@ -44,8 +44,12 @@ public class CharacterManager : MonoBehaviour {
 		if (state == CharacterState.HeadBroken)
 		{
 			state = CharacterState.Bald;
+			headBrokenObject.SetActive(false);
+			heartBrokenObject.SetActive(true);
+		}
 
-		}		// TODO: Other feedback	}
+		// TODO: Other feedback
+	}
 
 	public int FixBaldness () {
 		baldness--;

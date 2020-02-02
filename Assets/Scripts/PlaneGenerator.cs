@@ -22,6 +22,9 @@ public class PlaneGenerator : MonoBehaviour {
     GameObject planeDetectedPrefab;
 
     [SerializeField]
+    GameObject tears;
+
+    [SerializeField]
     GameObject target;
 
     [SerializeField]
@@ -81,15 +84,16 @@ public class PlaneGenerator : MonoBehaviour {
             } else {
                 if (hit.Trackable is DetectedPlane &&
                     (hit.Trackable as DetectedPlane).PlaneType == DetectedPlaneType.HorizontalUpwardFacing) {
-					planeDetected.SetActive (false);					plane = Instantiate (planePrefab);					plane.transform.position = hit.Pose.position;
+					planeDetected.SetActive (false);                                        tears.SetActive(true);                    //tears.transform.position = hit.Pose.position;					plane = Instantiate (planePrefab);					plane.transform.position = hit.Pose.position;
                     //plane.transform.Rotate (0, _PrefabRotation, 0, Space.Self);
                     //gameObject.transform.parent = hit.Trackable.CreateAnchor (hit.Pose).transform;
 
                     GameFlowManager.tools.Water = plane;
                     GameFlowManager.plane.transform.parent = plane.transform;
+                    GameFlowManager.plane.transform.localPosition = Vector3.zero;
 
-                    plane.GetComponent<DraggableItem>().AddTarget(target);
-                    plane.GetComponent<DraggableItem>().AddResultEvent(resultEvent);
+                    //plane.GetComponent<DraggableItem>().AddTarget(target);
+                    //plane.GetComponent<DraggableItem>().AddResultEvent(resultEvent);
 
                     StartCoroutine (TriggerPlaneGeneration ());
 
@@ -153,6 +157,6 @@ public class PlaneGenerator : MonoBehaviour {
     }
 
 	IEnumerator TriggerPlaneGeneration() {		yield return new WaitForSeconds (1f);
-		plane.GetComponent<Animator> ().SetTrigger ("TriggerGeneration");
+		tears.GetComponent<Animator> ().SetTrigger ("TriggerGeneration");
 	}
 }

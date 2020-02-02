@@ -95,13 +95,14 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 		case TouchPhase.Moved:
 		case TouchPhase.Stationary:
 
-			if (dragged) {
-				DragObject ();
-				TriggerDragEvent ();
+			if (dragged)
+			{
+				DragObject();
+				TriggerDragEvent();
 
 				// Make the object follow the touch raycasting line
-				touchWorldPosition = mainCamera.ScreenToWorldPoint (
-					new Vector3 (
+				touchWorldPosition = mainCamera.ScreenToWorldPoint(
+					new Vector3(
 						touch.position.x,
 						touch.position.y,
 						mainCamera.nearClipPlane
@@ -113,15 +114,21 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 				transform.position = objectPosition + movementVector;
 
 				// Check if the target object intersects with the ray
-				if (Physics.Raycast (touchWorldPosition, touchDirection, out hit)) {
-					for (int i = 0; i < targets.Count; i++)
+				Debug.DrawRay(touchWorldPosition, touchDirection * 100f, Color.red, 0.5f);
+				RaycastHit[] hits = Physics.RaycastAll(touchWorldPosition, touchDirection);
+				if (hits != null)
+				{
+					foreach (var target in hits)
 					{
-						if (hit.transform.gameObject == targets[i])
+						for (int i = 0; i < targets.Count; i++)
 						{
-							dragged = false;
+							if (target.transform.gameObject == targets[i])
+							{
+								dragged = false;
 
-							DropObject();
-							TriggerDropEvent(resultEvents[i]);
+								DropObject();
+								TriggerDropEvent(resultEvents[i]);
+							}
 						}
 					}
 				}

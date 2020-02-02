@@ -16,10 +16,10 @@ public class GameFlowManager : MonoBehaviour {
 	public static ToolsManager tools { get; private set; }
 	public static CharacterManager character { get; private set; }
 	public static GameObject plane { get; private set; }
-	public static Vector3 upVector { get; private set; }	// Start is called before the first frame update	void Start () {
+	public static Vector3 upVector { get; private set; }	bool litUp, watered;	// Start is called before the first frame update	void Start () {
 		camera = firstPersonCamera;
 		tools = toolsManager;
-		character = characterManager;		plane = worldPlane;	}	// Update is called once per frame	void Update () {	}	public static void StartGame () {		GameFlowManager.gameStarted = true;
+		character = characterManager;		plane = worldPlane;		litUp = watered = false;	}	// Update is called once per frame	void Update () {	}	public static void StartGame () {		GameFlowManager.gameStarted = true;
 		character.character.SetActive(true);
 		tools.hammer.SetActive (true);	}
 
@@ -30,20 +30,28 @@ public class GameFlowManager : MonoBehaviour {
 
 	public void HitHead () {
 		print("Hit Head");
-		character.FixHead ();		tools.bulb.SetActive(true);		tools.Water.SetActive(true);	}
+		character.FixHead ();		tools.hammer.SetActive(false);		tools.bulb.SetActive(true);		tools.Water.SetActive(true);	}
 
 	public void LightUp () {
 		print("Tap light up");
-		if (character.FixBaldness () == 0)
+		if (!litUp)
 		{
-			tools.Apple.SetActive(true);
+			litUp = true;
+			if (character.FixBaldness() == 0)
+			{
+				tools.Apple.SetActive(true);
+			}
 		}
 	}
 
 	public void Water () {
-		if (character.FixBaldness () == 0)
+		if (!watered)
 		{
-			tools.Apple.SetActive(true);
+			watered = true;
+			if (character.FixBaldness() == 0)
+			{
+				tools.Apple.SetActive(true);
+			}
 		}
 	}
 
