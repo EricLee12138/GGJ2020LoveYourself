@@ -25,7 +25,7 @@ public class GameFlowManager : MonoBehaviour {
 	}
 
 	public void HitHead () {
-		character.FixHead ();	}
+		character.FixHead ();		tools.bulb.SetActive(true);	}
 
 	public void LightUp () {
 		character.FixBaldness ();
