@@ -128,28 +128,28 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 
 	/// Some effect/feedback for dragging the object
 	public void DragObject () {
-		if (transform.localScale.x < .12f) {
-			transform.localScale = new Vector3 (
-				transform.localScale.x + .01f,
-				transform.localScale.y + .01f,
-				transform.localScale.z + .01f
-			);
-		} else {
-			transform.localScale = new Vector3 (.12f, .12f, .12f);
-		}
+		//if (transform.localScale.x < .12f) {
+		//	transform.localScale = new Vector3 (
+		//		transform.localScale.x + .01f,
+		//		transform.localScale.y + .01f,
+		//		transform.localScale.z + .01f
+		//	);
+		//} else {
+		//	transform.localScale = new Vector3 (.12f, .12f, .12f);
+		//}
 	}
 
 	// Some effect/feedback for dropping the object
 	public void DropObject () {
-		if (transform.localScale.x > .1f) {
-			transform.localScale = new Vector3 (
-				transform.localScale.x - .01f,
-				transform.localScale.y - .01f,
-				transform.localScale.z - .01f
-			);
-		} else {
-			transform.localScale = new Vector3 (.1f, .1f, .1f);
-		}
+		//if (transform.localScale.x > .1f) {
+		//	transform.localScale = new Vector3 (
+		//		transform.localScale.x - .01f,
+		//		transform.localScale.y - .01f,
+		//		transform.localScale.z - .01f
+		//	);
+		//} else {
+		//	transform.localScale = new Vector3 (.1f, .1f, .1f);
+		//}
 	}
 
 	public void TriggerDragEvent () {
