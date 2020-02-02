@@ -12,13 +12,18 @@ using Input = GoogleARCore.InstantPreviewInput;
 public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 
 	[SerializeField]
-	GameObject target;
+	List<GameObject> targets;
 
 	[SerializeField]
-	UnityEvent moveEvent;
+	List<UnityEvent> resultEvents;
 
-	[SerializeField]
-	UnityEvent resultEvent;
+
+	//[SerializeField]
+	//UnityEvent moveEvent;
+	
+	//GameObject target;
+	//[SerializeField]
+	//UnityEvent resultEvent;
 
 	[SerializeField]
 	float stationaryTimeLimit = 0.5f;	Vector3 objectPosition;
@@ -35,6 +40,11 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 	void Start () {
 		mainCamera = GameFlowManager.camera;
 		upVector = GameFlowManager.upVector == null ? Vector3.up : GameFlowManager.upVector;
+		
+		if (targets.Count != resultEvents.Count)
+		{
+			Debug.LogError("!!!");
+		}
 	}
 
 	void Update () {
@@ -92,9 +102,17 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 				float x = objectPositionVector.y / touchDirection.y;
 				Vector3 movementVector = x * touchDirection - objectPositionVector;
 				transform.position = objectPosition + movementVector;				// Check if the target object intersects with the ray
-				if (Physics.Raycast (touchWorldPosition, touchDirection, out hit)) {					if (hit.transform.gameObject == target) {
-						dragged = false;						DropObject ();
-						TriggerDropEvent ();					}				}			}
+				if (Physics.Raycast (touchWorldPosition, touchDirection, out hit)) {
+					for (int i = 0; i < targets.Count; i++)
+					{
+						if (hit.transform.gameObject == targets[i])
+						{
+							dragged = false;
+
+							DropObject();
+							TriggerDropEvent(resultEvents[i]);
+						}
+					}				}			}
 
 			break;
 
@@ -138,12 +156,12 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 
 	}
 
-	public void TriggerDropEvent () {
-		TriggerResultEvent ();
+	public void TriggerDropEvent (UnityEvent e) {
+		TriggerResultEvent (e);
 	}
 
-	public void TriggerResultEvent () {
-		resultEvent.Invoke ();
+	public void TriggerResultEvent (UnityEvent e) {
+		e.Invoke ();
 	}
 
 	public void OnPointerClick (PointerEventData eventData) {
