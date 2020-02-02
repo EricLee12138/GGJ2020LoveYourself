@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ToolsManager : MonoBehaviour
-{
-    [SerializeField]
-    GameObject hammer;
+{	public GameObject hammer;	public GameObject bulb;
 
-    [SerializeField]
-    GameObject bulb;
-
-    [SerializeField]
-    GameObject Water;
+	public GameObject Water;
 
     // Start is called before the first frame update
     void Start()

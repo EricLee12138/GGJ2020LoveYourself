@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using GoogleARCore;#if UNITY_EDITOR
+using GoogleARCore;#if UNITY_EDITOR
 // Set up touch input propagation while using Instant Preview in the editor.using Input = GoogleARCore.InstantPreviewInput;#endif
 public class TappableItem : MonoBehaviour {
-	// Start is called before the first frame update	void Start () {	}	// Update is called once per frame	void Update () {		RaycastHit hit;
+
+	[SerializeField]
+	UnityEvent resultEvent;
+
+	// Start is called before the first frame update	void Start () {	}	// Update is called once per frame	void Update () {		RaycastHit hit;
 		Touch touch;		// If the player has not touched the screen, we are done with this update.		if (Input.touchCount < 1 || (touch = Input.GetTouch (0)).phase != TouchPhase.Began) {
 			return;
 		}		// Should not handle input if the player is pointing on UI.		if (EventSystem.current.IsPointerOverGameObject (touch.fingerId)) {
@@ -27,5 +32,5 @@ using GoogleARCore;#if UNITY_EDITOR
 		}
 	}
 
-	public void TriggerResultEvent () {		gameObject.GetComponent<MeshRenderer> ().material.color = new Color (Random.Range (0f, 1f), Random.Range (0f, 1f), Random.Range (0f, 1f));	}
+	void TriggerResultEvent () {		resultEvent.Invoke ();	}
 }

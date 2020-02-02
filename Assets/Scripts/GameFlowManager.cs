@@ -16,9 +16,29 @@ public class GameFlowManager : MonoBehaviour {
 	public static Vector3 upVector { get; private set; }	// Start is called before the first frame update	void Start () {
 		camera = firstPersonCamera;
 		tools = toolsManager;
-		character = characterManager;	}	// Update is called once per frame	void Update () {	}	public static void StartGame () {		GameFlowManager.gameStarted = true;	}
+		character = characterManager;	}	// Update is called once per frame	void Update () {	}	public static void StartGame () {		GameFlowManager.gameStarted = true;
+		tools.hammer.SetActive (true);	}
 
-	public static void HitLeg () {
+	public void HitLeg () {
+		print ("Hit leg");
 		character.FixLeg ();
+	}
+
+	public void HitHead () {
+		character.FixHead ();	}
+
+	public void LightUp () {
+		character.FixBaldness ();
+	}
+
+	public void Water () {
+		character.FixBaldness ();
+	}
+
+	public void FeedApple () {
+		character.FixHunger ();	}
+
+	public void GrabTissue () {
+		character.FixLoneliness ();
 	}
 }
