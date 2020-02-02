@@ -69,12 +69,14 @@ public class GameFlowManager : MonoBehaviour {
 		{
 			litUp = true;
 			plane.transform.Find("Tears").gameObject.GetComponentInChildren<TappableItem>(true).enabled = true;
-			if (character.FixBaldness() == 0)
-			{
-				tools.Apple.SetActive(true);
+			//if (
+			character.FixBaldness();// == 0)
+			//{
+				//tools.Apple.SetActive(true);
 				tools.bulb.GetComponent<BillBoardImage>().TriggerEnd();
 				soundManager.PlayLightBulb();
-			}
+				soundManager.PlayPlantGrows();
+			//}
 		}
 	}
 
@@ -95,6 +97,7 @@ public class GameFlowManager : MonoBehaviour {
 				tools.cup.GetComponent<BillBoardImage>().TriggerEnd();
 				plane.transform.Find("Tears").gameObject.GetComponentInChildren<TappableItem>(true).enabled = false;
 				soundManager.PlayPlantGrows();
+				soundManager.PlayWaterScoop2();
 			}
 		}
 	}
@@ -109,5 +112,12 @@ public class GameFlowManager : MonoBehaviour {
 
 	public void GrabTissue () {
 		character.FixLoneliness ();
+		StartCoroutine(PlayEndMusic());
+	}
+
+	IEnumerator PlayEndMusic()
+	{
+		yield return new WaitForSeconds(7f);
+		soundManager.PlayEndMusic();
 	}
 }

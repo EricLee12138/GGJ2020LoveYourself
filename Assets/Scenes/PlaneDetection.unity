@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311912, g: 0.3807398, b: 0.3587272, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4031,6 +4031,8 @@ MonoBehaviour:
   tearsOut: {fileID: 8300000, guid: d362f21e8db8fcf4c8ddcef5151bc639, type: 3}
   waterScoop: {fileID: 8300000, guid: 83581e94336cb7548adc8b072f416f23, type: 3}
   waterScoop2: {fileID: 8300000, guid: 441fd97c0eabf3f49878d932a7b27021, type: 3}
+  pickUp: {fileID: 8300000, guid: ab5e1efcb7d6c5d419d04254c39a1a25, type: 3}
+  endMusic: {fileID: 8300000, guid: 8137f3b16c4b07240a265eda8502221b, type: 3}
 --- !u!81 &1881410192
 AudioListener:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 	[SerializeField]
 	List<UnityEvent> resultEvents;
 
+	SoundManager soundManager;
+
 
 	//[SerializeField]
 	//UnityEvent moveEvent;
@@ -42,7 +44,8 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 	void Start () {
 		mainCamera = GameFlowManager.camera;
 		upVector = GameFlowManager.upVector == null ? Vector3.up : GameFlowManager.upVector;
-		
+		soundManager = GameObject.FindObjectOfType<SoundManager>();
+
 		if (targets.Count != resultEvents.Count)
 		{
 			Debug.LogError("!!!");
@@ -90,7 +93,8 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 				}
 			}
 
-			//can play pick up sound here
+				//can play pick up sound here
+				soundManager.PlayPickUp();
 
 			break;
 

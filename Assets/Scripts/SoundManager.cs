@@ -11,7 +11,9 @@ public class SoundManager : MonoBehaviour
         plantGrows,
         tearsOut,
         waterScoop,
-        waterScoop2;
+        waterScoop2,
+        pickUp,
+        endMusic;
 
     private AudioSource audioSource;
 
@@ -54,5 +56,15 @@ public class SoundManager : MonoBehaviour
     public void PlayWaterScoop2()
     {
         audioSource.PlayOneShot(waterScoop2);
+    }
+
+    public void PlayPickUp()
+    {
+        audioSource.PlayOneShot(pickUp);
+    }
+
+    public void PlayEndMusic()
+    {
+        audioSource.PlayOneShot(endMusic);
     }
 }
