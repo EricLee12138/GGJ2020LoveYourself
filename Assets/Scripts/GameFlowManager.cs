@@ -36,6 +36,7 @@ public class GameFlowManager : MonoBehaviour {
 	}
 
 	public void FeedApple () {
+		print ("Feed apple");
 		character.FixHunger ();	}
 
 	public void GrabTissue () {
