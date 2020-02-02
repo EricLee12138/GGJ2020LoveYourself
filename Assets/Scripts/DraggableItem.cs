@@ -15,7 +15,7 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 	GameObject target;
 
 	[SerializeField]
-	UnityEvent moveEvent;
+	UnityEvent dragEvent;
 
 	[SerializeField]
 	UnityEvent resultEvent;
@@ -135,7 +135,7 @@ public class DraggableItem : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void TriggerDragEvent () {
-
+		dragEvent.Invoke ();
 	}
 
 	public void TriggerDropEvent () {
